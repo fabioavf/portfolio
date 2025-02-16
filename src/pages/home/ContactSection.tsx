@@ -10,14 +10,17 @@ const ContactSection = () => {
     {
       icon: Linkedin,
       text: 'fabioavf',
+      href: 'https://www.linkedin.com/in/fabioavf',
     },
     {
       icon: Mail,
       text: 'amorelli.ff@gmail.com',
+      href: 'mailto:amorelli.ff@gmail.com',
     },
     {
       icon: Phone,
       text: '(35) 98887-0037',
+      href: 'tel:+5535988870037',
     },
   ];
 
@@ -35,10 +38,17 @@ const ContactSection = () => {
               key={item.text}
               className='bg-zinc-800 rounded-lg p-6 hover:bg-zinc-700 transition-colors'
             >
-              <div className='flex items-center gap-4'>
-                <item.icon />
-                <span>{item.text}</span>
-              </div>
+              {item.href ? (
+                <a href={item.href} target='_blank' className='flex items-center gap-4'>
+                  <item.icon />
+                  <span>{item.text}</span>
+                </a>
+              ) : (
+                <div className='flex items-center gap-4'>
+                  <item.icon />
+                  <span>{item.text}</span>
+                </div>
+              )}
             </motion.div>
           ))}
         </div>
