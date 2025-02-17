@@ -1,6 +1,4 @@
-import { ArrowRight } from 'lucide-react';
 import { motion } from 'motion/react';
-import React from 'react';
 import { FloatingBalls } from '../../components/FloatingBalls';
 
 const HeroSection = () => {
