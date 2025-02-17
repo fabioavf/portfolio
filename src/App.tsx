@@ -10,13 +10,15 @@ import EducationSection from './pages/home/EducationSection';
 import ExperienceSection from './pages/home/ExperienceSection';
 import HeroSection from './pages/home/HeroSection';
 import SkillsSection from './pages/home/SkillsSection';
+import { useScrollTo } from './hooks/useScrollTo';
+import { AnimatePresence, motion } from 'motion/react';
 
 const navigationItems = [
-  { label: 'Home', href: '#home' },
-  { label: 'Skills', href: '#skills' },
-  { label: 'Experience', href: '#experience' },
-  { label: 'Education', href: '#education' },
-  { label: 'Contact', href: '#contact' },
+  { label: 'Home', href: 'home' },
+  { label: 'Skills', href: 'skills' },
+  { label: 'Experience', href: 'experience' },
+  { label: 'Education', href: 'education' },
+  { label: 'Contact', href: 'contact' },
 ];
 
 const socialLinks = [
@@ -38,17 +40,34 @@ const socialLinks = [
 ];
 
 const App: FC = () => {
+  const scrollTo = useScrollTo();
+
   return (
     <div className='min-h-screen bg-zinc-900 text-zinc-100'>
       <nav className='fixed w-full p-6 backdrop-blur-sm bg-zinc-900/80 z-50'>
         <div className='max-w-6xl mx-auto flex justify-between items-center'>
           <TypeWriter text='amorelli.dev' className='flex items-center text-xl font-bold' />
           <div className='hidden md:flex gap-6'>
-            {navigationItems.map(({ label, href }) => (
-              <a key={href} href={href} className='text-zinc-400 hover:text-zinc-100 transition-colors'>
-                {label}
-              </a>
-            ))}
+            <AnimatePresence>
+              {navigationItems.map(({ label, href }, index) => (
+                <motion.button
+                  key={href}
+                  onClick={() => scrollTo(href)}
+                  className='text-zinc-400 hover:text-zinc-100 cursor-pointer transition-colors'
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.3,
+                    delay: index * 0.1,
+                    ease: 'easeOut',
+                  }}
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {label}
+                </motion.button>
+              ))}
+            </AnimatePresence>
           </div>
         </div>
       </nav>
