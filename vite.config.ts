@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   plugins: [react()],
-  base: "/",
+  base: "./", // Use relative paths instead of absolute
   build: {
     assetsDir: "assets",
     rollupOptions: {
