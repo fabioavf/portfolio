@@ -256,21 +256,21 @@ const App: FC = () => {
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: "100%", opacity: 0 }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-zinc-900/95 backdrop-blur-xl border-l border-zinc-800 z-50 lg:hidden"
+              className="fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-zinc-900/95 backdrop-blur-xl border-l border-zinc-800 z-50 lg:hidden flex flex-col"
             >
-              <div className="flex flex-col h-full">
-                {/* Header */}
-                <div className="px-6 py-6 border-b border-zinc-800">
-                  <div className="text-lg font-mono text-blue-400">
-                    Navigation
-                  </div>
-                  <div className="text-sm text-zinc-500 mt-1">
-                    $ ls -la sections/
-                  </div>
+              {/* Header */}
+              <div className="px-6 py-6 border-b border-zinc-800 flex-shrink-0">
+                <div className="text-lg font-mono text-blue-400">
+                  Navigation
                 </div>
+                <div className="text-sm text-zinc-500 mt-1">
+                  $ ls -la sections/
+                </div>
+              </div>
 
-                {/* Navigation Items */}
-                <div className="flex-1 px-6 py-6 space-y-2">
+              {/* Navigation Items - Scrollable */}
+              <div className="flex-1 overflow-y-auto px-6 py-6">
+                <div className="space-y-2">
                   {navigationItems.map(({ label, href }, index) => (
                     <motion.button
                       key={href}
@@ -292,38 +292,38 @@ const App: FC = () => {
                     </motion.button>
                   ))}
                 </div>
+              </div>
 
-                {/* Footer with social links */}
-                <div className="px-6 py-6 border-t border-zinc-800">
-                  <div className="text-sm text-zinc-500 mb-4 font-mono">
-                    $ whoami
+              {/* Footer with social links - Fixed at bottom */}
+              <div className="px-6 py-6 border-t border-zinc-800 flex-shrink-0">
+                <div className="text-sm text-zinc-500 mb-4 font-mono">
+                  $ whoami
+                </div>
+                <div className="text-zinc-400 mb-4">
+                  <div>Fabio Amorelli</div>
+                  <div className="text-sm text-zinc-500">
+                    Full-Stack Developer
                   </div>
-                  <div className="text-zinc-400 mb-4">
-                    <div>Fabio Amorelli</div>
-                    <div className="text-sm text-zinc-500">
-                      Full-Stack Developer
-                    </div>
-                  </div>
+                </div>
 
-                  <div className="flex gap-4">
-                    {socialLinks.map(({ icon: Icon, href, label }, index) => (
-                      <motion.a
-                        key={href}
-                        href={href}
-                        aria-label={label}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-zinc-400 hover:text-blue-400 transition-colors"
-                        whileHover={{ scale: 1.2, y: -2 }}
-                        whileTap={{ scale: 0.9 }}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.6 + index * 0.1 }}
-                      >
-                        <Icon className="w-5 h-5" />
-                      </motion.a>
-                    ))}
-                  </div>
+                <div className="flex gap-4">
+                  {socialLinks.map(({ icon: Icon, href, label }, index) => (
+                    <motion.a
+                      key={href}
+                      href={href}
+                      aria-label={label}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-zinc-400 hover:text-blue-400 transition-colors"
+                      whileHover={{ scale: 1.2, y: -2 }}
+                      whileTap={{ scale: 0.9 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.6 + index * 0.1 }}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </motion.a>
+                  ))}
                 </div>
               </div>
             </motion.div>
