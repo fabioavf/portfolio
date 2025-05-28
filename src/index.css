@@ -1,8 +1,15 @@
 @import "tailwindcss";
 
-/* Custom styles if needed */
-* {
-    box-sizing: border-box;
+/* Prevent ANY initial scrolling */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 80px;
+    /* Lock scroll position until page is ready */
+    overflow: hidden;
+}
+
+html.scroll-ready {
+    overflow: unset;
 }
 
 html,
@@ -11,4 +18,31 @@ body {
     padding: 0;
     background-color: #18181b;
     color: #f4f4f5;
+    overscroll-behavior: none;
+    /* Prevent any scroll restoration */
+    scroll-restoration: manual;
+}
+
+/* Ensure root container doesn't cause scroll issues */
+#root {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Lock page at top initially */
+body {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+body.scroll-unlocked {
+    position: static;
+}
+
+/* Fix for potential Framer Motion layout shifts */
+[data-framer-portal-id] {
+    position: fixed !important;
+    z-index: 9999 !important;
 }
