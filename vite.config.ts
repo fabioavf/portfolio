@@ -1,9 +1,14 @@
+// vite.config.ts
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  plugins: [react()],
-  base: "./", // Use relative paths instead of absolute
+  plugins: [
+    react(),
+    tailwindcss(), // Proper Tailwind v4 plugin
+  ],
+  base: "./",
   build: {
     assetsDir: "assets",
     rollupOptions: {
@@ -12,6 +17,11 @@ export default defineConfig({
         chunkFileNames: "assets/[name]-[hash].js",
         entryFileNames: "assets/[name]-[hash].js",
       },
+    },
+  },
+  css: {
+    postcss: {
+      plugins: [],
     },
   },
 });
