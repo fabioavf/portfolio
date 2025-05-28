@@ -1,5 +1,5 @@
-import { motion, AnimatePresence } from "motion/react";
-import { useState, useRef, useEffect } from "react";
+import { motion } from "motion/react";
+import { useState, useRef } from "react";
 import {
   Terminal,
   Send,

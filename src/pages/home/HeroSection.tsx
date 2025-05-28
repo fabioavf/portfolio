@@ -9,6 +9,7 @@ interface Particle {
   size: number;
   duration: number;
   velocity: { x: number; y: number };
+  connections: number[];
 }
 
 interface Command {
@@ -53,6 +54,7 @@ const EnhancedParticles = () => {
             x: (Math.random() - 0.5) * 0.3,
             y: (Math.random() - 0.5) * 0.3,
           },
+          connections: [],
         });
       }
       setParticles(newParticles);
