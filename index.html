@@ -1,13 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<!doctype html>
+<html lang="en" class="">
+    <head>
+        <meta charset="UTF-8" />
+
+        <!-- Favicon -->
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.svg" />
+
+        <!-- Viewport and responsive design -->
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <!-- SEO Meta Tags -->
+        <title>Fabio Amorelli - Full-Stack Developer | amorelli.dev</title>
+        <meta
+            name="description"
+            content="Full-stack developer based in Brazil, specializing in modern web applications with React, Next.js, TypeScript, and Node.js. Available for freelance work."
+        />
+        <meta
+            name="keywords"
+            content="Fabio Amorelli, Full-Stack Developer, React, Next.js, TypeScript, Node.js, Brazil, Freelance, Web Development"
+        />
+        <meta name="author" content="Fabio Amorelli" />
+
+        <!-- Open Graph / Social Media -->
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://amorelli.dev" />
+        <meta
+            property="og:title"
+            content="Fabio Amorelli - Full-Stack Developer"
+        />
+        <meta
+            property="og:description"
+            content="Full-stack developer specializing in modern web applications. Building cutting-edge solutions with React, Next.js, and TypeScript."
+        />
+        <meta property="og:site_name" content="amorelli.dev" />
+        <meta property="og:locale" content="en_US" />
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content="https://amorelli.dev" />
+        <meta
+            name="twitter:title"
+            content="Fabio Amorelli - Full-Stack Developer"
+        />
+        <meta
+            name="twitter:description"
+            content="Full-stack developer specializing in modern web applications with cutting-edge technologies."
+        />
+
+        <!-- Theme and Browser -->
+        <meta name="theme-color" content="#18181b" />
+        <meta name="color-scheme" content="dark" />
+
+        <!-- Performance and Loading -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+        <!-- Prevent scroll flash -->
+        <style>
+            html {
+                overflow: hidden;
+                background-color: #18181b;
+                color: #f4f4f5;
+            }
+            body {
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                margin: 0;
+                padding: 0;
+                background-color: #18181b;
+            }
+            #root {
+                min-height: 100vh;
+                background-color: #18181b;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="root"></div>
+        <script type="module" src="/src/main.tsx"></script>
+    </body>
 </html>
