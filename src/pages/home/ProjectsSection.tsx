@@ -16,7 +16,7 @@ const ProjectsSection = () => {
     {
       name: "RIO Services",
       description:
-        "Complete booking platform for cleaning services company in Cork, Ireland",
+        "Complete booking platform for services provider company in Cork, Ireland",
       longDescription:
         "Full-scale business platform with online booking system, international payment processing, admin dashboard with analytics, and team management. MVP delivered in 1 month using AI-assisted development.",
       tech: [
@@ -167,18 +167,31 @@ const ProjectsSection = () => {
             {projects.map((project, index) => (
               <motion.div
                 key={index}
+                layoutId={`project-${index}`}
                 onClick={() => setSelectedProject(index)}
-                className={`p-6 rounded-xl border cursor-pointer transition-all ${
+                className={`p-6 rounded-xl border cursor-pointer ${
                   selectedProject === index
                     ? "bg-purple-600/20 border-purple-600/30"
                     : "bg-zinc-800/50 border-zinc-700 hover:bg-zinc-800"
                 }`}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
+                transition={{
+                  delay: index * 0.1,
+                  layout: { duration: 0.2 },
+                }}
+                whileHover={{
+                  scale: 1.02,
+                  transition: { duration: 0.2 },
+                }}
+                whileTap={{ scale: 0.98 }}
+                style={{
+                  // Force hardware acceleration to prevent flickering
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                  perspective: 1000,
+                }}
               >
                 <div className="flex items-center justify-between mb-3">
                   <h3 className="text-xl font-bold">{project.name}</h3>
@@ -229,6 +242,11 @@ const ProjectsSection = () => {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               className="bg-zinc-900/90 border border-zinc-700 rounded-xl overflow-hidden"
+              style={{
+                // Force hardware acceleration
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden",
+              }}
             >
               <div className="flex items-center gap-2 px-4 py-3 bg-zinc-800/60 border-b border-zinc-700">
                 <div className="flex gap-1.5">
@@ -335,9 +353,10 @@ const ProjectsSection = () => {
                       href={projects[selectedProject].url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      style={{ transition: "background-color 0.2s ease" }}
                     >
                       <ExternalLink className="w-4 h-4" />
                       Live Platform
@@ -348,9 +367,10 @@ const ProjectsSection = () => {
                       href={projects[selectedProject].github}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-4 py-2 border border-zinc-600 text-zinc-300 rounded-lg hover:bg-zinc-800 transition-colors"
+                      className="flex items-center gap-2 px-4 py-2 border border-zinc-600 text-zinc-300 rounded-lg hover:bg-zinc-800"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
+                      style={{ transition: "background-color 0.2s ease" }}
                     >
                       <Github className="w-4 h-4" />
                       Source Code

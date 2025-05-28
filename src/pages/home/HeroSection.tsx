@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "motion/react";
 import { useState, useEffect, useCallback, useRef } from "react";
-import { ChevronRight, Terminal } from "lucide-react";
+import { ChevronRight, Terminal, Download, Eye } from "lucide-react";
+import { useScrollTo } from "../../hooks/useScrollTo";
 
 interface Particle {
   id: number;
@@ -192,11 +193,7 @@ const EnhancedParticles = () => {
   );
 };
 
-const TerminalInterface = ({
-  onCommand,
-}: {
-  onCommand: (cmd: string) => void;
-}) => {
+const TerminalInterface = () => {
   const [input, setInput] = useState("");
   const [history, setHistory] = useState<string[]>([
     "Welcome to amorelli.dev terminal",
@@ -206,6 +203,7 @@ const TerminalInterface = ({
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+  const scrollTo = useScrollTo();
 
   const commands: Command[] = [
     {
@@ -221,22 +219,67 @@ const TerminalInterface = ({
     {
       name: "skills",
       description: "Navigate to skills section",
-      action: () => onCommand("skills"),
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ skills",
+          "Navigating to skills section...",
+          "",
+        ]);
+        setTimeout(() => scrollTo("skills"), 800);
+      },
     },
     {
       name: "projects",
       description: "Navigate to projects section",
-      action: () => onCommand("projects"),
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ projects",
+          "Loading projects...",
+          "",
+        ]);
+        setTimeout(() => scrollTo("projects"), 800);
+      },
     },
     {
       name: "experience",
       description: "Navigate to experience section",
-      action: () => onCommand("experience"),
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ experience",
+          "Accessing work history...",
+          "",
+        ]);
+        setTimeout(() => scrollTo("experience"), 800);
+      },
+    },
+    {
+      name: "education",
+      description: "Navigate to education section",
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ education",
+          "Opening education records...",
+          "",
+        ]);
+        setTimeout(() => scrollTo("education"), 800);
+      },
     },
     {
       name: "contact",
       description: "Navigate to contact section",
-      action: () => onCommand("contact"),
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ contact",
+          "Opening contact interface...",
+          "",
+        ]);
+        setTimeout(() => scrollTo("contact"), 800);
+      },
     },
     {
       name: "clear",
@@ -253,6 +296,30 @@ const TerminalInterface = ({
       description: "Current user info",
       action: () => whoami(),
     },
+    {
+      name: "pwd",
+      description: "Show current location",
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ pwd",
+          "/home/fabio/portfolio/hero",
+          "",
+        ]);
+      },
+    },
+    {
+      name: "date",
+      description: "Show current date",
+      action: () => {
+        setHistory((prev) => [
+          ...prev,
+          "$ date",
+          new Date().toLocaleString(),
+          "",
+        ]);
+      },
+    },
   ];
 
   const showHelp = () => {
@@ -260,16 +327,27 @@ const TerminalInterface = ({
       "Available commands:",
       ...commands.map((cmd) => `  ${cmd.name.padEnd(12)} - ${cmd.description}`),
       "",
+      "Navigation commands will take you to the respective sections.",
+      "Use Tab for autocomplete, or click suggestions.",
+      "",
     ];
     setHistory((prev) => [...prev, "$ help", ...helpText]);
   };
 
   const showAbout = () => {
     const aboutText = [
-      "Full-stack developer based in Brazil",
-      "Specializing in modern web applications",
-      "Technologies: React, Next.js, TypeScript, Node.js",
-      "Passionate about frontend magic and performance",
+      "┌─ Fabio Amorelli ─────────────────────────────┐",
+      "│ Full-stack developer based in Brazil         │",
+      "│ Specializing in modern web applications      │",
+      "│                                              │",
+      "│ Technologies:                                │",
+      "│ • Frontend: React, Next.js, TypeScript      │",
+      "│ • Backend: Node.js, Prisma, PostgreSQL      │",
+      "│ • Tools: Git, Linux, AI-assisted dev        │",
+      "│                                              │",
+      "│ Passionate about frontend magic &           │",
+      "│ performance optimization                     │",
+      "└──────────────────────────────────────────────┘",
       "",
     ];
     setHistory((prev) => [...prev, "$ about", ...aboutText]);
@@ -284,13 +362,15 @@ const TerminalInterface = ({
   };
 
   const listSections = () => {
-    const sections = ["home", "skills", "experience", "education", "contact"];
-    setHistory((prev) => [
-      ...prev,
-      "$ ls",
-      ...sections.map((s) => `  ${s}/`),
-      "",
-    ]);
+    const sections = [
+      "drwxr-xr-x  2 fabio  staff   64 May 28 2025 home/",
+      "drwxr-xr-x  3 fabio  staff   96 May 28 2025 skills/",
+      "drwxr-xr-x  4 fabio  staff  128 May 28 2025 experience/",
+      "drwxr-xr-x  3 fabio  staff   96 May 28 2025 projects/",
+      "drwxr-xr-x  2 fabio  staff   64 May 28 2025 education/",
+      "drwxr-xr-x  2 fabio  staff   64 May 28 2025 contact/",
+    ];
+    setHistory((prev) => [...prev, "$ ls -la", "total 42", ...sections, ""]);
   };
 
   const whoami = () => {
@@ -325,7 +405,7 @@ const TerminalInterface = ({
     } else {
       setHistory((prev) => [
         ...prev,
-        `Command not found: ${input}`,
+        `zsh: command not found: ${input}`,
         'Type "help" for available commands',
         "",
       ]);
@@ -372,7 +452,18 @@ const TerminalInterface = ({
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: index * 0.03 }}
-              className={`mb-1 ${line.startsWith("$") ? "text-blue-400 font-medium" : "text-zinc-300"}`}
+              className={`mb-1 ${
+                line.startsWith("$")
+                  ? "text-blue-400 font-medium"
+                  : line.includes("command not found") || line.includes("zsh:")
+                    ? "text-red-400"
+                    : line.includes("Navigating") ||
+                        line.includes("Loading") ||
+                        line.includes("Opening") ||
+                        line.includes("Accessing")
+                      ? "text-green-400"
+                      : "text-zinc-300"
+              }`}
             >
               {line}
             </motion.div>
@@ -431,10 +522,20 @@ const TerminalInterface = ({
 
 const EnhancedHeroSection = () => {
   const [showTerminal, setShowTerminal] = useState(false);
+  const scrollTo = useScrollTo();
 
-  const handleCommand = (cmd: string) => {
-    // Here you would integrate with your scroll navigation
-    console.log(`Navigating to: ${cmd}`);
+  // Download CV function - serves pre-made PDF
+  const downloadCV = () => {
+    // Create a link to download the pre-made CV PDF
+    const link = document.createElement("a");
+    link.href = "/Fabio_Amorelli_CV.pdf"; // Path to your PDF in public folder
+    link.download = "Fabio_Amorelli_CV.pdf";
+    link.target = "_blank";
+
+    // Fallback for browsers that don't support download attribute
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   useEffect(() => {
@@ -513,7 +614,8 @@ const EnhancedHeroSection = () => {
 
               <div className="flex flex-wrap gap-4 pt-4">
                 <motion.button
-                  className="px-8 py-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-colors text-lg"
+                  onClick={() => scrollTo("projects")}
+                  className="group px-8 py-4 bg-blue-600 text-white rounded-xl font-medium hover:bg-blue-700 transition-all duration-200 text-lg flex items-center gap-3"
                   whileHover={{
                     scale: 1.05,
                     boxShadow: "0 20px 40px rgba(59, 130, 246, 0.3)",
@@ -523,16 +625,19 @@ const EnhancedHeroSection = () => {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.5 }}
                 >
+                  <Eye className="w-5 h-5 group-hover:rotate-12 transition-transform" />
                   View Projects
                 </motion.button>
                 <motion.button
-                  className="px-8 py-4 border border-zinc-600 text-zinc-300 rounded-xl font-medium hover:bg-zinc-800 transition-colors text-lg"
+                  onClick={downloadCV}
+                  className="group px-8 py-4 border border-zinc-600 text-zinc-300 rounded-xl font-medium hover:bg-zinc-800 hover:border-zinc-500 transition-all duration-200 text-lg flex items-center gap-3"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: 1.7 }}
                 >
+                  <Download className="w-5 h-5 group-hover:translate-y-1 transition-transform" />
                   Download CV
                 </motion.button>
               </div>
@@ -549,7 +654,7 @@ const EnhancedHeroSection = () => {
                   transition={{ duration: 1, ease: "easeOut" }}
                   className="w-full max-w-lg"
                 >
-                  <TerminalInterface onCommand={handleCommand} />
+                  <TerminalInterface />
                 </motion.div>
               )}
             </AnimatePresence>

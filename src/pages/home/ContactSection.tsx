@@ -250,15 +250,29 @@ GitHub: ${contactInfo.github}
             {contactCards.map((card, index) => (
               <motion.div
                 key={card.label}
+                layoutId={`contact-${card.label}`}
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-6 hover:bg-zinc-800 transition-all group"
+                transition={{
+                  delay: index * 0.1,
+                  layout: { duration: 0.2 },
+                }}
+                className="bg-zinc-800/50 border border-zinc-700 rounded-xl p-6 hover:bg-zinc-800 group"
+                style={{
+                  // Force hardware acceleration to prevent flickering
+                  transform: "translateZ(0)",
+                  backfaceVisibility: "hidden",
+                  perspective: 1000,
+                  transition: "background-color 0.2s ease",
+                }}
               >
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="p-3 bg-cyan-600/20 rounded-lg group-hover:bg-cyan-600/30 transition-colors">
+                    <div
+                      className="p-3 bg-cyan-600/20 rounded-lg group-hover:bg-cyan-600/30"
+                      style={{ transition: "background-color 0.2s ease" }}
+                    >
                       <card.icon className="w-5 h-5 text-cyan-400" />
                     </div>
                     <div>
@@ -276,10 +290,14 @@ GitHub: ${contactInfo.github}
                       onClick={() =>
                         copyToClipboard(card.href || card.value, card.command)
                       }
-                      className="p-2 bg-zinc-700 rounded-lg hover:bg-zinc-600 transition-colors"
+                      className="p-2 bg-zinc-700 rounded-lg hover:bg-zinc-600"
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       title="Copy to clipboard"
+                      style={{
+                        transition: "background-color 0.2s ease",
+                        transform: "translateZ(0)",
+                      }}
                     >
                       {copiedItem === card.command ? (
                         <Check className="w-4 h-4 text-green-400" />
@@ -293,10 +311,14 @@ GitHub: ${contactInfo.github}
                         href={card.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2 bg-cyan-600 rounded-lg hover:bg-cyan-700 transition-colors"
+                        className="p-2 bg-cyan-600 rounded-lg hover:bg-cyan-700"
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                         title={`Open ${card.label}`}
+                        style={{
+                          transition: "background-color 0.2s ease",
+                          transform: "translateZ(0)",
+                        }}
                       >
                         <ExternalLink className="w-4 h-4 text-white" />
                       </motion.a>
@@ -314,6 +336,11 @@ GitHub: ${contactInfo.github}
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               className="bg-zinc-900/90 border border-zinc-700 rounded-xl overflow-hidden"
+              style={{
+                // Force hardware acceleration
+                transform: "translateZ(0)",
+                backfaceVisibility: "hidden",
+              }}
             >
               <div className="flex items-center gap-2 px-4 py-3 bg-zinc-800/60 border-b border-zinc-700">
                 <div className="flex gap-1.5">
@@ -364,9 +391,13 @@ GitHub: ${contactInfo.github}
                   />
                   <motion.button
                     type="submit"
-                    className="p-2 bg-cyan-600 rounded-lg hover:bg-cyan-700 transition-colors"
+                    className="p-2 bg-cyan-600 rounded-lg hover:bg-cyan-700"
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
+                    style={{
+                      transition: "background-color 0.2s ease",
+                      transform: "translateZ(0)",
+                    }}
                   >
                     <Send className="w-4 h-4" />
                   </motion.button>
